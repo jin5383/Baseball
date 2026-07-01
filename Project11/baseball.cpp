@@ -10,38 +10,31 @@ class baseball
 {
 public:
 
-	vector<int> playgame(string str)
+	explicit baseball(string answer = "123") : answer(std::move(answer)) {}
+
+	vector<int> playgame(const string& guess) const
 	{
-		vector<int> result = {0,0};
-		int i = 0;
+		if (guess.length() > answer.length())
+			throw std::length_error("guess is too long");
 
-		for (char ch : str)
+		int strikes = 0;
+		int balls = 0;
+
+		for (size_t i = 0; i < guess.length(); i++)
 		{
-			if (ch < '0' || ch >'9')
-				throw std::invalid_argument("");
-			int j = 0;
+			char digit = guess[i];
+			if (digit < '0' || digit > '9')
+				throw std::invalid_argument("guess must contain only digits");
 
-			for (char ans : answer)
-			{
-				if (ch == ans)
-				{
-					if (i == j)
-						result[0]++;
-					else
-						result[1]++;
-				}
-
-				j++;
-			}
-
-			i++;
+			if (digit == answer[i])
+				strikes++;
+			else if (answer.find(digit) != string::npos)
+				balls++;
 		}
 
-		if(str.length()>3)
-			throw std::length_error("test");
-
-		return result;		
+		return { strikes, balls };
 	}
 
+private:
 	string answer = "123";
 };

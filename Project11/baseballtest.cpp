@@ -33,3 +33,10 @@ TEST_F(BaseballFixture, Test3)
 	expect = { 0,1 };
 	EXPECT_EQ( base.playgame("240"), expect);
 }
+
+TEST_F(BaseballFixture, Test4)
+{
+	baseball custom("456");
+	expect = { 3,0 };
+	EXPECT_EQ( custom.playgame("456"), expect);
+}
